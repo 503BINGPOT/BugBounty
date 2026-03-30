@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow authenticated users to read and write bounties
+    match /bounties/{bountyId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null &&
+        request.auth.uid == resource.data.createdBy;
+      allow update: if request.auth != null &&
+        request.auth.uid == resource.data.createdBy;
+    }
+
+    // Allow authenticated users to read and write reports
+    match /reports/{reportId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null &&
+        request.auth.uid == resource.data.submittedBy;
+      allow update: if request.auth != null &&
+        request.auth.uid == resource.data.submittedBy;
+    }
+
+    // Allow authenticated users to read and write user profiles
+    match /users/{userId} {
+      allow read, write: if request.auth != null &&
+        request.auth.uid == userId;
+    }
+  }
+}
