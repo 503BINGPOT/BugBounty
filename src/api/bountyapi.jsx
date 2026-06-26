@@ -4,7 +4,7 @@ import {
   query, where, serverTimestamp
 } from "firebase/firestore";
 
-// ---------- BOUNTIES ----------
+// ---------- BOUNTy ----------
 
 // POST /api/bounties
 export const createBounty = async ({
